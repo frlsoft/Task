@@ -1,0 +1,36 @@
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+  //创建wait div
+  var $loading = $("<img/>").attr({src: base_url+"images/blue-loading.gif",alt: "Loading. Please wait."}).addClass("wait").appendTo($("body")).hide();
+  $("#btnwork").click(function(){  	
+	var url = <?php echo '"'.site_url('work/load/gid/').'"'?> +"/"+ $("#uuid").val()+"/finish/"+$("#finish").val();
+	var refer = window.showModalDialog(url,"","");		   
+  });
+  $("[uuid]").click(function(){
+	if (confirm('确定要完成此任务吗？')){
+	//$loading.show();
+	var url = "<?php echo site_url('task/setTaskFinishTime/')?>";
+	//$("#uuid").val()
+	$.ajax({
+		url: url,
+		dataType: 'html',
+		type:'POST',
+		data:{uuid:$(this).attr("uuid")},
+		success:function(html){
+			//$("#info").text(setRefer(html)).show().delay(100).hide(300);
+			info = json(html);
+			if(info.message.flag == "1"){
+				$loading.hide();
+				//$(this).parents('tr:first').remove();
+				$(this).remove();
+			//location.reload();
+			}else{alert(info.message.info);};			
+		},
+		error:function(event,request, settings){
+			alert(settings.description);
+		}
+	});
+	}
+  });
+});
+</script>

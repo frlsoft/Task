@@ -1,0 +1,13 @@
+
+ select * from yg_user a left join yg_user_role b on a.gid = b.uid; --用户角色
+ 
+ select *  from yg_role_menu a left join yg_menu b on a.menuid = b.mid; --角色菜单
+ 
+ select * from yg_user a left join yg_user_role b on a.gid = b.uid
+
+ delete from yg_assgin_task where refer not in (select refer from yg_task); --清理用户与任务无匹配
+
+
+ -------
+ edituser 
+ ALTER TABLE yg_task ADD edituser VARCHAR(50);
